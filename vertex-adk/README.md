@@ -18,7 +18,7 @@ npm install
 
 ### 2. Set your API key
 
-The agent uses the Gemini API. Create a key in [Google AI Studio](https://aistudio.google.com/app/apikey), then:
+The agent uses the **Gemini API** (model: `gemini-2.5-flash`). Create a key in [Google AI Studio](https://aistudio.google.com/app/apikey), then:
 
 ```bash
 cp .env.sample .env
