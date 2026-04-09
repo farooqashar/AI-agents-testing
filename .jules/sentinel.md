@@ -1,0 +1,4 @@
+## 2025-04-09 - [Input Validation and API Timeout]
+**Vulnerability:** Missing input validation for geographical coordinates in Open-Meteo API requests.
+**Learning:** External API dependencies should not blindly trust input, even if the LLM is expected to provide valid data. Out-of-bounds coordinates can cause unexpected behavior or errors on the downstream API. Also discovered missing timeout for fetch requests which could lead to DoS or resource exhaustion.
+**Prevention:** Enforce strict validation rules (min/max for lat/lng) on agent function parameters using Zod. Always implement abort signals with reasonable timeouts for external fetch calls.
