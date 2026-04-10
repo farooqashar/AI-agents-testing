@@ -5,13 +5,15 @@ const getWeather = new FunctionTool({
   name: 'get_weather',
   description: 'Returns weather forecast (hourly temperatures) for a location by latitude and longitude using Open-Meteo.',
   parameters: z.object({
-    latitude: z.number().describe('Latitude of the location (e.g. 52.52 for Berlin).'),
-    longitude: z.number().describe('Longitude of the location (e.g. 13.41 for Berlin).'),
+    // 🛡️ Sentinel: Enforce coordinate boundaries to prevent malformed API requests
+    latitude: z.number().min(-90).max(90).describe('Latitude of the location (e.g. 52.52 for Berlin).'),
+    longitude: z.number().min(-180).max(180).describe('Longitude of the location (e.g. 13.41 for Berlin).'),
   }),
   execute: async ({ latitude, longitude }) => {
     try {
       const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&current_weather=true`;
-      const response = await fetch(url);
+      // 🛡️ Sentinel: Add timeout to prevent external API from hanging indefinitely (DoS risk)
+      const response = await fetch(url, { signal: AbortSignal.timeout(5000) });
 
       if (!response.ok) {
         return { status: 'error', report: `Weather API returned ${response.status} for ${latitude}, ${longitude}.` };
