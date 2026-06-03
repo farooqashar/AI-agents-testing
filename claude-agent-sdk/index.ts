@@ -2,7 +2,7 @@ import { query } from '@anthropic-ai/claude-agent-sdk';
 import { customMcpServer } from './agent.js';
 
 async function main() {
-  const prompt = process.argv[2] || 'What is the weather like in London today?';
+  const prompt = process.argv[2] || 'What is the weather like in Long Island today?';
   console.log(`Sending prompt to Claude Agent: "${prompt}"\n`);
 
   try {
@@ -12,6 +12,7 @@ async function main() {
         mcpServers: {
           weather: customMcpServer,
         },
+        permissionMode: 'bypassPermissions',
         // We can restrict allowedTools to only use our custom MCP tools,
         // or let it use default system tools if needed. Here, we register our custom server.
       },
