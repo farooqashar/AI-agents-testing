@@ -12,9 +12,12 @@ async function main() {
         mcpServers: {
           weather: customMcpServer,
         },
-        permissionMode: 'bypassPermissions',
-        // We can restrict allowedTools to only use our custom MCP tools,
-        // or let it use default system tools if needed. Here, we register our custom server.
+        // Disable all built-in tools (Bash, Write, Edit, WebFetch, ...) so only
+        // the weather MCP tool is available, pre-approve it, and deny anything
+        // else without prompting so the demo stays non-interactive.
+        tools: [],
+        allowedTools: ['mcp__weather__get_weather'],
+        permissionMode: 'dontAsk',
       },
     });
 
