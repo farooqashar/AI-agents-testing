@@ -10,7 +10,7 @@ const getWeather = tool({
   }),
   execute: async ({ latitude, longitude }) => {
     try {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&current_weather=true`;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&current_weather=true&timezone=auto&forecast_hours=12`;
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -21,20 +21,22 @@ const getWeather = tool({
         current_weather?: { temperature: number; time: string };
         hourly?: { time: string[]; temperature_2m: number[] };
         hourly_units?: { temperature_2m: string };
+        timezone_abbreviation?: string;
       };
 
       const reportParts: string[] = [];
+      const zone = data.timezone_abbreviation ? ` ${data.timezone_abbreviation}` : '';
 
       if (data.current_weather) {
         const { temperature, time } = data.current_weather;
         const unit = data.hourly_units?.temperature_2m ?? '°C';
-        reportParts.push(`Current weather: ${temperature}${unit} (as of ${time}).`);
+        reportParts.push(`Current weather: ${temperature}${unit} (as of ${time}${zone}).`);
       }
 
       if (data.hourly?.time?.length && data.hourly?.temperature_2m?.length) {
         const unit = data.hourly_units?.temperature_2m ?? '°C';
         const nextFew = data.hourly.temperature_2m.slice(0, 12).map((t, i) => `${data.hourly!.time[i]}: ${t}${unit}`).join('; ');
-        reportParts.push(`Next 12 hours: ${nextFew}.`);
+        reportParts.push(`Next 12 hours (local time${zone}): ${nextFew}.`);
       }
 
       return {
