@@ -54,7 +54,7 @@ const getWeather = tool({
 
 export const rootAgent = new Agent({
   name: 'weather_agent',
-  model: 'gpt-4o',
+  model: 'gpt-6-luna',
   instructions: `You are a helpful weather assistant. Use the get_weather tool with the user's latitude and longitude to get current weather and hourly temperatures. If the user gives a city name, use approximate coordinates (e.g. Berlin 52.52, 13.41; Cape Town -33.92, 18.42; London 51.51, -0.13).`,
   tools: [getWeather],
 });
