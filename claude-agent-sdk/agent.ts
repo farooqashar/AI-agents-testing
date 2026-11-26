@@ -5,13 +5,13 @@ const getWeather = tool(
   'get_weather',
   'Returns weather forecast (hourly temperatures) for a location by latitude and longitude using Open-Meteo.',
   {
-    latitude: z.number().describe('Latitude of the location (e.g. 52.52 for Berlin).'),
-    longitude: z.number().describe('Longitude of the location (e.g. 13.41 for Berlin).'),
+    latitude: z.number().min(-90).max(90).describe('Latitude of the location (e.g. 52.52 for Berlin).'),
+    longitude: z.number().min(-180).max(180).describe('Longitude of the location (e.g. 13.41 for Berlin).'),
   },
   async ({ latitude, longitude }) => {
     try {
       const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&current_weather=true&timezone=auto&forecast_hours=12`;
-      const response = await fetch(url);
+      const response = await fetch(url, { signal: AbortSignal.timeout(5000) });
 
       if (!response.ok) {
         return {
