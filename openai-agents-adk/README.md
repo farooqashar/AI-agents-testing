@@ -35,4 +35,11 @@ Run the agent with the prompt "What is the weather like in London today?":
 npm start
 ```
 
+Or pass your own prompt:
+```bash
+npm start -- "What's the weather in Tokyo?"
+```
+
+The command exits with a non-zero status if the agent fails, for example with an invalid API key.
+
 `npm start` loads `OPENAI_API_KEY` from `.env`, so no manual `export` is needed.
