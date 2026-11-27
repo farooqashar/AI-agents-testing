@@ -11,29 +11,36 @@ The agent is equipped with a custom Model Context Protocol (MCP) tool (`get_weat
 
 ## Setup
 
+Requires Node.js 22.9 or later (for `--env-file-if-exists`).
+
 1. Install dependencies:
    ```bash
    npm install
    ```
 
-2. Build the TypeScript files:
+2. Build the TypeScript files (output goes to `dist/`):
    ```bash
    npm run build
    ```
 
-3. Export your Anthropic API Key:
+3. Copy `.env.sample` to `.env` and fill in your Anthropic API Key:
+   ```bash
+   cp .env.sample .env
+   ```
+
+   `npm start` loads `ANTHROPIC_API_KEY` from `.env` when the file exists. Without a `.env`, export the key instead:
    ```bash
    export ANTHROPIC_API_KEY="your-api-key-here"
    ```
 
 ## Run
 
-Run the agent with the default prompt ("What is the weather like in London today?"):
+Run the agent with the default prompt ("What is the weather like in Long Island today?"):
 ```bash
 npm start
 ```
 
 Or pass a custom prompt:
 ```bash
-node index.js "What is the temperature in Paris right now?"
+npm start -- "What is the temperature in Paris right now?"
 ```
