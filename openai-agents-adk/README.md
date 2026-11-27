@@ -2,7 +2,7 @@
 
 This sample demonstrates how to build a simple agent using OpenAI's `@openai/agents` SDK.
 
-The agent is equipped with a custom tool (`get_weather`) that fetches current weather and hourly temperatures using the Open-Meteo API, and is powered by `gpt-4o`.
+The agent is equipped with a custom tool (`get_weather`) that fetches current weather and hourly temperatures using the Open-Meteo API, and is powered by `gpt-6-luna`.
 
 ## Project Structure
 
