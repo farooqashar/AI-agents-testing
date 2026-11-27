@@ -11,7 +11,7 @@ The agent is equipped with a custom tool (`get_weather`) that fetches current we
 
 ## Setup
 
-Requires Node.js 20.6 or later (for `--env-file`).
+Requires Node.js 22 or later.
 
 1. Install dependencies:
    ```bash
