@@ -31,12 +31,28 @@ async function main() {
           }
         }
       } else if (message.type === 'result') {
-        console.log(`\n\nTask finished with status: ${message.subtype}`);
+        if (message.subtype !== 'success') {
+          console.error(`\n\nTask failed with status: ${message.subtype}`);
+          for (const err of message.errors) {
+            console.error(err);
+          }
+          process.exitCode = 1;
+        } else if (message.is_error) {
+          console.error(`\n\nTask finished with status: ${message.subtype}, but reported an error:`);
+          console.error(message.result);
+          process.exitCode = 1;
+        } else {
+          console.log(`\n\nTask finished with status: ${message.subtype}`);
+        }
       }
     }
   } catch (error) {
     console.error('An error occurred:', error);
+    process.exitCode = 1;
   }
 }
 
-main();
+main().catch((err) => {
+  console.error(err);
+  process.exitCode = 1;
+});
